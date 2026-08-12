@@ -9,10 +9,10 @@ export const siteConfig: SiteConfig = {
 	title: "Ynnn",
 
 	// 站点副标题
-	subtitle: "blog",
+	subtitle: "blog | auto deploy",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://www.ynnn-7.com",
 
 	// 站点描述
 	description:
