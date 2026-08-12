@@ -4,7 +4,7 @@ import { untrack } from "svelte";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import type { StandardizedAnime } from "@/types/anime";
-import TabNav from "../bangumi/TabNav.svelte";
+import TabNav from "./TabNav.svelte";
 import AnimeCard from "./AnimeCard.svelte";
 import AnimeDetailModal from "./AnimeDetailModal.svelte";
 

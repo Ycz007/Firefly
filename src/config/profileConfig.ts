@@ -9,10 +9,10 @@ export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/avatar.avif",
 
 	// 名字
-	name: "Firefly",
+	name: "Ynnn",
 
 	// 个人签名
-	bio: "Hello, I'm Firefly.",
+	bio: "究竟什么样的结局，才配得上这一路的颠沛流离",
 
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons
@@ -22,28 +22,30 @@ export const profileConfig: ProfileConfig = {
 	// showName: true 时显示图标和名称，false 时只显示图标
 	links: [
 		{
-			name: "qq",
-			icon: "fa7-brands:qq",
-			url: "https://qm.qq.com/q/ZGsFa8qX2G",
+			name: "GitHub",
+			icon: "fa7-brands:github",
+			url: "https://github.com/Ycz007",
 			showName: false,
 		},
 		{
-			name: "GitHub",
-			icon: "fa7-brands:github",
-			url: "https://github.com/CuteLeaf",
+			name: "bilibili",
+			icon: "fa7-brands:bilibili",
+			url: "https://space.bilibili.com/399653986",
 			showName: false,
+		},
+		{
+			name: "QQ",
+			icon: "fa7-brands:qq",
+			url: "https://qm.qq.com/q/ZGsFa8qX2G",
+			showName: false,
+			copy: "2658452565",
 		},
 		{
 			name: "Email",
 			icon: "fa7-solid:envelope",
-			url: "mailto:xiaye@msn.com",
+			url: "mailto:2658452565@qq.com",
 			showName: false,
-		},
-		{
-			name: "RSS",
-			icon: "fa7-solid:rss",
-			url: "/rss/",
-			showName: false,
+			copy: "2658452565@qq.com",
 		},
 	],
 };

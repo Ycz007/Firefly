@@ -12,7 +12,8 @@ const { style } = Astro.props;
 const className = Astro.props.class;
 ---
 
-<div class:list={["card-base", "p-3", className]} style={style}>
+<div class:list={["card-base", "p-3", "profile-widget", className]} style={style}>
+  <div class="profile-widget-inner">
   <a
     aria-label="Go to About Page"
     href={url("/about/")}
@@ -55,11 +56,16 @@ const className = Astro.props.class;
             {profileConfig.links.length > 1 && profileConfig.links.map(item =>
                     {
                     const showName = item.showName;
-                    const className = showName 
-                        ? "btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95" 
+                    const className = showName
+                        ? "btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95"
                         : "btn-regular rounded-lg h-10 w-10 active:scale-90";
 
-                    if (item.url.startsWith("mailto:")) {
+                    if (item.copy) {
+                        return <button type="button" aria-label={item.name} data-copy={item.copy} class={className}>
+                            <Icon is:inline name={item.icon} class="text-[1.5rem]"></Icon>
+                            {showName && item.name}
+                        </button>
+                    } else if (item.url.startsWith("mailto:")) {
                         const encodedEmail = Buffer.from(item.url.replace("mailto:", "")).toString("base64");
                         return <a rel="me" aria-label={item.name} href="#" data-encoded-email={encodedEmail} onclick={`
                                             (function() {
@@ -77,6 +83,11 @@ const className = Astro.props.class;
                             <Icon is:inline name={item.icon} class="text-[1.5rem]"></Icon>
                             {showName && item.name}
                         </a>
+                    } else if (item.qrCode) {
+                        return <a rel="me" aria-label={item.name} href={item.url} data-fancybox data-src={item.qrCode} class={className}>
+                            <Icon is:inline name={item.icon} class="text-[1.5rem]"></Icon>
+                            {showName && item.name}
+                        </a>
                     } else {
                         return <a rel="me" aria-label={item.name} href={item.url} target="_blank" class={className}>
                             <Icon is:inline name={item.icon} class="text-[1.5rem]"></Icon>
@@ -86,7 +97,13 @@ const className = Astro.props.class;
                     }
             )}
             {profileConfig.links.length == 1 && (function(item){
-                if (item.url.startsWith("mailto:")) {
+                if (item.copy) {
+                        return <button type="button" aria-label={item.name} data-copy={item.copy}
+                                            class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
+                                <Icon is:inline name={item.icon} class="text-[1.5rem]"></Icon>
+                                {item.name}
+                            </button>
+                    } else if (item.url.startsWith("mailto:")) {
                         const encodedEmail = Buffer.from(item.url.replace("mailto:", "")).toString("base64");
                         return <a rel="me" aria-label={item.name} href="#" data-encoded-email={encodedEmail} onclick={`
                                             (function() {
@@ -104,6 +121,12 @@ const className = Astro.props.class;
                             <Icon is:inline name={item.icon} class="text-[1.5rem]"></Icon>
                             {item.name}
                         </a>
+                    } else if (item.qrCode) {
+                        return <a rel="me" aria-label={item.name} href={item.url} data-fancybox data-src={item.qrCode}
+                                            class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
+                                <Icon is:inline name={item.icon} class="text-[1.5rem]"></Icon>
+                                {item.name}
+                            </a>
                     } else {
                         return <a rel="me" aria-label={item.name} href={item.url} target="_blank"
                                             class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
@@ -114,4 +137,41 @@ const className = Astro.props.class;
             })(profileConfig.links[0])}
         </div>
   </div>
+  </div>
+
+  <!-- 复制提示 toast，挂在卡片下方 -->
+  <div class="profile-copy-toast flex justify-center pointer-events-none opacity-0 transition-all duration-300 ease-out pt-2">
+    <span class="bg-(--primary) text-white text-xs font-medium px-3.5 py-1.5 rounded-full whitespace-nowrap shadow-lg shadow-(--primary)/25 profile-copy-toast-text"></span>
+  </div>
 </div>
+
+<style>
+  .profile-copy-toast.show { opacity: 1; }
+</style>
+
+<script is:inline>
+  (function() {
+    var timer;
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-copy]');
+      if (!btn) return;
+      e.preventDefault();
+      var text = btn.getAttribute('data-copy');
+      if (!text) return;
+      var label = btn.getAttribute('aria-label') || '';
+      var widget = btn.closest('.profile-widget');
+      if (!widget) return;
+      var toast = widget.querySelector('.profile-copy-toast');
+      var toastText = toast ? toast.querySelector('.profile-copy-toast-text') : null;
+      if (!toast || !toastText) return;
+      navigator.clipboard.writeText(text).then(function() {
+        toastText.textContent = label + ' 已复制';
+        toast.classList.add('show');
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+          toast.classList.remove('show');
+        }, 1800);
+      }).catch(function() {});
+    });
+  })();
+</script>
