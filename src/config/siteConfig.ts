@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
 	title: "Ynnn",
 
 	// 站点副标题
-	subtitle: "blog | auto deploy",
+	subtitle: "blog",
 
 	// 站点 URL
 	site_url: "https://www.ynnn-7.com",
