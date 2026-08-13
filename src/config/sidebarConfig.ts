@@ -116,7 +116,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 				clock: {
 					// 背景图 URL：把图片放到 public/images/ 目录后填对应路径，例如 "/images/clock-bg.png"
 					// 留空则不显示背景图
-					background: "/images/cicd-cover.png",
+					background: "/images/clock.png",
 				},
 			},
 		},

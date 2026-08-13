@@ -2,7 +2,7 @@
 title: 博客热部署指南：Push 代码自动更新到服务器
 published: 2026-08-12
 updated: 2026-08-12
-pinned: true
+pinned: false
 description: "使用 GitHub Actions 实现博客热部署：推送代码到 GitHub 后自动构建并部署到自有服务器，服务器无需安装 Node.js、Git 等环境。"
 image: "/images/cicd-cover.png"
 tags: ["博客", "热部署", "GitHub Actions", "Nginx", "CI/CD"]
