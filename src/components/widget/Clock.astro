@@ -1,0 +1,118 @@
+---
+import { Icon } from "astro-icon/components";
+import WidgetLayout from "@/components/common/WidgetLayout.astro";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import type { WidgetComponentConfig } from "@/types/config";
+
+interface Props {
+	class?: string;
+	style?: string;
+	widgetConfig?: WidgetComponentConfig;
+}
+
+const { class: className, style, widgetConfig } = Astro.props;
+
+const showTitle = widgetConfig?.showTitle !== false;
+const background = widgetConfig?.specificConfig?.clock?.background;
+---
+
+<WidgetLayout
+  name={i18n(I18nKey.clock)}
+  showTitle={showTitle}
+  id="clock"
+  class={className}
+  style={style}
+>
+  <!-- 太阳/月亮图标：右上角（标题旁） -->
+  <div slot="title-icon" class="text-(--primary) text-2xl">
+    <Icon is:inline name="material-symbols:wb-sunny-outline-rounded" id="clock-sun" />
+    <Icon is:inline name="material-symbols:dark-mode-outline-rounded" id="clock-moon" class="hidden" />
+  </div>
+
+  <!-- 日期 + 时间 -->
+  <div class="flex flex-col items-center gap-1 py-3">
+    <div class="text-neutral-600 dark:text-neutral-300 text-sm" id="clock-date">
+      ----<span></span>--<span></span>--
+    </div>
+    <div
+      class="clock-time-gradient text-4xl font-extrabold tabular-nums tracking-wider"
+      id="clock-time"
+    >
+      --:--:--
+    </div>
+  </div>
+
+  <!-- 底部图片（不透明，直接显示原图） -->
+  {
+    background && (
+      <img
+        src={background}
+        alt=""
+        class="w-full h-auto object-cover rounded-lg mt-2"
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
+</WidgetLayout>
+
+<style>
+  .clock-time-gradient {
+    background-image: linear-gradient(135deg, var(--primary), var(--btn-content));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+</style>
+
+<script is:inline>
+  function pad(num) {
+    return num.toString().padStart(2, "0");
+  }
+
+  function updateClock() {
+    const now = new Date();
+    const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    const time = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+    const dateEl = document.getElementById("clock-date");
+    const timeEl = document.getElementById("clock-time");
+    const sunEl = document.getElementById("clock-sun");
+    const moonEl = document.getElementById("clock-moon");
+
+    if (dateEl) {
+      dateEl.textContent = date;
+    }
+    if (timeEl) {
+      timeEl.textContent = time;
+    }
+
+    // 根据当前小时切换太阳/月亮图标（6:00-18:00 白天，其余夜间）
+    const hour = now.getHours();
+    const isDay = hour >= 6 && hour < 18;
+    if (sunEl) {
+      sunEl.classList.toggle("hidden", !isDay);
+    }
+    if (moonEl) {
+      moonEl.classList.toggle("hidden", isDay);
+    }
+  }
+
+  function startClock() {
+    if (window.__clockTimer) {
+      clearInterval(window.__clockTimer);
+    }
+    updateClock();
+    window.__clockTimer = setInterval(updateClock, 1000);
+  }
+
+  // 页面加载时启动
+  startClock();
+
+  // Swup 页面切换后重新启动
+  document.addEventListener("swup:contentReplaced", function () {
+    setTimeout(startClock, 100);
+  });
+</script>

@@ -62,9 +62,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		url: "#",
 		icon: "material-symbols:person",
 		children: [
-			// 动态
-			LinkPresets.Dynamic,
-
 			// 相册
 			LinkPresets.Gallery,
 
@@ -90,12 +87,6 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "主页",
 		url: "/",
 		icon: "material-symbols:home",
-	},
-	Dynamic: {
-		name: "动态",
-		url: "/dynamic/",
-		icon: "material-symbols:forum-rounded",
-		pageKey: "dynamic",
 	},
 	Archive: {
 		name: "归档",

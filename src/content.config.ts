@@ -27,12 +27,6 @@ type PostData = {
 	nextSlug: string;
 };
 
-type DynamicData = {
-	published: Date;
-	pinned: boolean;
-	location: string;
-};
-
 type ContentCollection<T> = CollectionConfig<
 	ZodType<T>,
 	ReturnType<typeof glob>
@@ -73,21 +67,10 @@ const specCollection: ContentCollection<Record<string, never>> =
 		schema: z.object({}),
 	});
 
-const dynamicCollection: ContentCollection<DynamicData> = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/dynamic" }),
-	schema: z.object({
-		published: z.date(),
-		pinned: z.boolean().optional().default(false),
-		location: z.string().optional().default(""),
-	}),
-});
-
 export const collections: {
-	dynamic: typeof dynamicCollection;
 	posts: typeof postsCollection;
 	spec: typeof specCollection;
 } = {
-	dynamic: dynamicCollection,
 	posts: postsCollection,
 	spec: specCollection,
 };

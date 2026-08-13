@@ -115,8 +115,6 @@ export const siteConfig: SiteConfig = {
 		gallery: true,
 		// 追番页面开关
 		anime: true,
-		// 动态页面开关
-		dynamic: true,
 		// 书签导航页面开关
 		booknav: true,
 	},

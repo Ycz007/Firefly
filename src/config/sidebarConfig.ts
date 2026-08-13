@@ -103,19 +103,20 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	// 右侧边栏组件配置列表
 	rightComponents: [
 		{
-			// 组件类型：最新动态组件
-			type: "dynamic",
+			// 组件类型：时钟组件
+			type: "clock",
 			// 是否启用该组件
 			enable: true,
 			// 组件位置
 			position: "top",
 			// 是否在文章详情页显示
-			showOnPostPage: true,
+			showOnPostPage: false,
 			// 组件专属配置
 			specificConfig: {
-				dynamic: {
-					// 显示的最新动态数量
-					limit: 2,
+				clock: {
+					// 背景图 URL：把图片放到 public/images/ 目录后填对应路径，例如 "/images/clock-bg.png"
+					// 留空则不显示背景图
+					background: "/images/cicd-cover.png",
 				},
 			},
 		},
@@ -278,21 +279,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			specificConfig: {
 				// 折叠阈值：当标签数量超过20个时自动折叠
 				collapseThreshold: 10,
-			},
-		},
-		{
-			// 组件类型：最新动态组件
-			type: "dynamic",
-			// 是否启用该组件
-			enable: true,
-			// 是否在文章详情页显示
-			showOnPostPage: true,
-			// 组件专属配置
-			specificConfig: {
-				dynamic: {
-					// 显示的最新动态数量
-					limit: 2,
-				},
 			},
 		},
 		{

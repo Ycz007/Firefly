@@ -4,9 +4,11 @@ published: 2026-08-12
 updated: 2026-08-12
 pinned: true
 description: "使用 GitHub Actions 实现博客热部署：推送代码到 GitHub 后自动构建并部署到自有服务器，服务器无需安装 Node.js、Git 等环境。"
-tags: ["博客", "部署", "GitHub Actions", "Nginx", "CI/CD"]
+image: "/images/cicd-cover.png"
+tags: ["博客", "热部署", "GitHub Actions", "Nginx", "CI/CD"]
 category: CI/CD
 ---
+
 
 ## 背景
 
@@ -59,12 +61,13 @@ cat /root/.ssh/github-actions
 
 | Secret 名称 | 示例值 | 说明 |
 |:---|:---|:---|
-| `SERVER_HOST` | `162.211.183.61` | 服务器 IP 地址 |
+| `SERVER_HOST` | `192.168.150.1` | 服务器 IP 地址 |
 | `SERVER_USER` | `root` | SSH 登录用户名 |
 | `SERVER_SSH_KEY` | `-----BEGIN OPENSSH PRIVATE KEY-----`... | 第一步复制的完整私钥（含头尾） |
 
 > 添加时注意私钥必须包含 `-----BEGIN OPENSSH PRIVATE KEY-----` 和 `-----END OPENSSH PRIVATE KEY-----`，缺一不可。
-> 确保https://github.com/用户名称/仓库名称/settings/actions的Actions permissions是Allow all actions and reusable workflows。
+>
+> 确保 `https://github.com/用户名称/仓库名称/settings/actions` 的Actions permissions是Allow all actions and reusable workflows。
 ---
 
 ## 第三步：创建 deploy.yml

@@ -10,7 +10,7 @@ export type WidgetComponentType =
 	| "calendar"
 	| "music"
 	| "siteInfo"
-	| "dynamic";
+	| "clock";
 
 export type WidgetComponentConfig = {
 	type: WidgetComponentType; // 组件类型
@@ -40,11 +40,11 @@ export type WidgetSpecificConfig = {
 	calendar?: CalendarConfig; // 日历组件专用配置
 	ad?: AdConfig; // 广告组件专用配置
 	siteInfo?: SiteInfoConfig; // 站点信息组件专用配置
-	dynamic?: DynamicWidgetConfig; // 最新动态组件专用配置
+	clock?: ClockConfig; // 时钟组件专用配置
 };
 
-export type DynamicWidgetConfig = {
-	limit?: number; // 显示的最新动态数量，默认 3
+export type ClockConfig = {
+	background?: string; // 背景图 URL（可填 public 目录路径如 /images/xxx.png）
 };
 
 // 站点信息组件专用配置
