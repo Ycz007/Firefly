@@ -1,4 +1,4 @@
-import type { SakuraConfig } from "../types/effectsConfig";
+import type { EntranceConfig, SakuraConfig } from "../types/effectsConfig";
 
 // 特效配置 - 集中管理所有动画特效
 
@@ -52,4 +52,19 @@ export const sakuraConfig: SakuraConfig = {
 
 	// 层级，确保樱花在合适的层级显示
 	zIndex: 100,
+};
+
+// 全屏开场动画配置
+export const entranceConfig: EntranceConfig = {
+	// 是否启用开场动画
+	enable: true,
+
+	// Logo 图片路径（public 目录下，以 "/" 开头）
+	logo: "/assets/images/effects/entrance-logo.avif",
+
+	// 动画总时长（ms）
+	duration: 1600,
+
+	// 回放策略：once 每会话一次 / always 每次刷新 / off 关闭
+	replay: "once",
 };

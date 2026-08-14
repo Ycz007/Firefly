@@ -10,7 +10,7 @@ export type {
 export type { CommentConfig } from "./commentConfig";
 export type { CoverImageConfig } from "./coverImageConfig";
 export type { DisplaySettingsConfig } from "./displaySettingsConfig";
-export type { SakuraConfig } from "./effectsConfig";
+export type { EntranceConfig, SakuraConfig } from "./effectsConfig";
 
 export type {
 	ExpressiveCodeConfig,

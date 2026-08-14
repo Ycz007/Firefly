@@ -24,3 +24,10 @@ export type SakuraConfig = {
 	};
 	zIndex: number; // 层级，确保樱花在合适的层级显示
 };
+
+export type EntranceConfig = {
+	enable: boolean; // 是否启用开场动画
+	logo: string; // Logo 图片路径（public 目录下，以 "/" 开头）
+	duration: number; // 动画总时长（ms）
+	replay: "once" | "always" | "off"; // 回放策略：once 每会话一次 / always 每次刷新 / off 关闭
+};
