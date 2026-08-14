@@ -9,6 +9,7 @@
 @import './tags.css';
 @import './display-settings.css';
 @import './categories.css';
+@import './entrance.css';
 
 @plugin '@tailwindcss/typography';
 
