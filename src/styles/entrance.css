@@ -16,20 +16,40 @@
 	background: var(--page-bg);
 	opacity: 1;
 	pointer-events: auto;
-	transition: opacity 300ms ease;
+	transition: transform 900ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-html[data-entrance="show"] #entrance-overlay {
+html[data-entrance="show"] #entrance-overlay,
+html[data-entrance="hide"] #entrance-overlay {
 	display: flex;
 }
 
-html[data-entrance="show"] body {
+html[data-entrance="show"] body,
+html[data-entrance="hide"] body {
 	overflow: hidden;
 }
 
 html[data-entrance="hide"] #entrance-overlay {
-	opacity: 0;
+	transform: translateY(-100%);
 	pointer-events: none;
+}
+
+/* 主页内容：开场时先压到视口下方，幕布上拉时同步从下往上滑入 */
+html[data-entrance="show"] #main-content-wrapper {
+	transform: translateY(100vh);
+}
+
+html[data-entrance="hide"] #main-content-wrapper {
+	animation: entrance-content-up 900ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes entrance-content-up {
+	from {
+		transform: translateY(100vh);
+	}
+	to {
+		transform: translateY(0);
+	}
 }
 
 .entrance-logo {
@@ -42,8 +62,9 @@ html[data-entrance="hide"] #entrance-overlay {
 	filter: drop-shadow(0 0 24px color-mix(in oklch, var(--primary) 55%, transparent));
 }
 
-html[data-entrance="show"] .entrance-logo {
-	animation: entrance-logo-in 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+html[data-entrance="show"] .entrance-logo,
+html[data-entrance="hide"] .entrance-logo {
+	animation: entrance-logo-in 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes entrance-logo-in {
@@ -69,8 +90,9 @@ html[data-entrance="show"] .entrance-logo {
 	color: oklch(0.92 0.01 var(--hue));
 }
 
-html[data-entrance="show"] .entrance-title {
-	animation: entrance-title-in 500ms 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+html[data-entrance="show"] .entrance-title,
+html[data-entrance="hide"] .entrance-title {
+	animation: entrance-title-in 600ms 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes entrance-title-in {

@@ -3,6 +3,7 @@ import GoogleAnalytics from "@components/analytics/GoogleAnalytics.astro";
 import La51Analytics from "@components/analytics/La51Analytics.astro";
 import MicrosoftClarity from "@components/analytics/MicrosoftClarity.astro";
 import UmamiAnalytics from "@components/analytics/UmamiAnalytics.astro";
+import AnnouncementToast from "@components/features/AnnouncementToast.astro";
 import CodeGroupManager from "@components/features/CodeGroupManager.astro";
 import FancyboxManager from "@components/features/FancyboxManager.astro";
 import FontSetup from "@components/features/FontSetup.astro";
@@ -15,6 +16,7 @@ import {
 	analyticsConfig,
 	backgroundWallpaper,
 	displaySettingsConfig,
+	entranceConfig,
 	expressiveCodeConfig,
 	musicPlayerConfig,
 	profileConfig,
@@ -560,6 +562,51 @@ const siteLang = lang.replace("_", "-");
         }
       })();
     </script>
+    <!-- 开场动画：首帧前判断是否播放并设置 data-entrance，避免内容闪屏 -->
+    <script
+      is:inline
+      define:vars={{
+        entranceEnable: entranceConfig.enable,
+        entranceDuration: entranceConfig.duration,
+        entranceReplay: entranceConfig.replay,
+      }}
+    >
+      (function () {
+        if (!entranceEnable || entranceReplay === "off") return;
+        if (
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+          return;
+        }
+        if (entranceReplay === "once") {
+          try {
+            if (sessionStorage.getItem("entrance-played")) return;
+          } catch (e) {}
+        }
+
+        document.documentElement.dataset.entrance = "show";
+
+        if (entranceReplay === "once") {
+          try {
+            sessionStorage.setItem("entrance-played", "1");
+          } catch (e) {}
+        }
+
+        // 播放完成后幕布上拉、主页从下往上滑入，随后移除遮罩并清理状态
+        window.setTimeout(function () {
+          document.documentElement.dataset.entrance = "hide";
+          window.setTimeout(function () {
+            var overlay = document.getElementById("entrance-overlay");
+            if (overlay) overlay.remove();
+            // 清掉 data-entrance，让主页 transform 恢复为 none（避免残留 containing block）
+            delete document.documentElement.dataset.entrance;
+            // 通知其他模块（如公告弹窗）进场动画已结束
+            document.dispatchEvent(new CustomEvent("firefly:entrance-done"));
+          }, 950); // 上拉/滑入时长 + 缓冲
+        }, entranceDuration);
+      })();
+    </script>
     <style
       define:vars={{
         configHue,
@@ -592,6 +639,13 @@ const siteLang = lang.replace("_", "-");
       },
     ]}
   >
+
+    {entranceConfig.enable && (
+      <div id="entrance-overlay" aria-hidden="true">
+        <img class="entrance-logo" src={entranceConfig.logo} alt="" />
+        <div class="entrance-title">{siteConfig.title}</div>
+      </div>
+    )}
 
     <div id="progress-bar"></div>
 
@@ -628,6 +682,9 @@ const siteLang = lang.replace("_", "-");
 
     <!-- Sakura Effect -->
     <SakuraEffect />
+
+    <!-- Announcement Toast -->
+    <AnnouncementToast />
 
     <!-- Fancybox Manager -->
     <FancyboxManager />

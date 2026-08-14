@@ -1073,7 +1073,7 @@ const hasMultipleImages =
 )}
 
 <!-- Main content -->
-<div class={`absolute w-full z-30 pointer-events-none ${mobileNonHomeBannerClass ? 'mobile-main-no-banner' : ''} ${!(isBannerMode && isBackgroundEnabled) ? 'no-banner-layout' : ''}`} style={isFullscreenMode ? 'top: 0;' : `top: ${finalMainPanelTop}`}>
+<div id="main-content-wrapper" class={`absolute w-full z-30 pointer-events-none ${mobileNonHomeBannerClass ? 'mobile-main-no-banner' : ''} ${!(isBannerMode && isBackgroundEnabled) ? 'no-banner-layout' : ''}`} style={isFullscreenMode ? 'top: 0;' : `top: ${finalMainPanelTop}`}>
     <!-- The pointer-events-none here prevent blocking the click event of the TOC -->
     <div class="relative w-full xl:w-[92vw] max-w-(--page-width) mx-auto pointer-events-auto">
         <div id="main-grid"

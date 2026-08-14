@@ -62,8 +62,8 @@ export const entranceConfig: EntranceConfig = {
 	// Logo 图片路径（public 目录下，以 "/" 开头）
 	logo: "/assets/images/effects/entrance-logo.avif",
 
-	// 动画总时长（ms）
-	duration: 1600,
+	// 幕布停留时长（ms）—— Logo/标题展示到幕布上拉前的停留时间
+	duration: 2000,
 
 	// 回放策略：once 每会话一次 / always 每次刷新 / off 关闭
 	replay: "once",
